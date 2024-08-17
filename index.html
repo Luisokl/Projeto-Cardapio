@@ -57,14 +57,14 @@
     <!-- CATEGORIES -->
     <section class="my-10">
         <div class="category-menu text-base text-center max-w-7xl mx-auto space-y-4">
-            <button class=" bg-black text-white py-1 px-3 rounded-md relative hover:shadow-[0px_0px_0px_2px#ffffff,0px_0px_0px_4px#000000] transition-all duration-300">
-                <a href="/" class="category-menu--link">HAMBURGUERS</a>
+            <button id="btn-category--hamburguer" class=" bg-black text-white py-1 px-3 rounded-md relative hover:shadow-[0px_0px_0px_2px#ffffff,0px_0px_0px_4px#000000] transition-all duration-300">
+                HAMBURGUERS
             </button>
-            <button class=" bg-black text-white py-1 px-3 mx-3 rounded-md relative hover:shadow-[0px_0px_0px_2px#ffffff,0px_0px_0px_4px#000000] transition-all duration-300">
-                <a href="/" class="category-menu--link">BEBIDAS</a>
+            <button id="btn-category--bebida" class=" bg-black text-white py-1 px-3 mx-3 rounded-md relative hover:shadow-[0px_0px_0px_2px#ffffff,0px_0px_0px_4px#000000] transition-all duration-300">
+                BEBIDAS
             </button>
-            <button class=" bg-black text-white py-1 px-3 rounded-md relative hover:shadow-[0px_0px_0px_2px#ffffff,0px_0px_0px_4px#000000] transition-all duration-300">
-                <a href="/" class="category-menu--link">SOBREMESAS</a>
+            <button id="btn-category--sobremesa" class=" bg-black text-white py-1 px-3 rounded-md relative hover:shadow-[0px_0px_0px_2px#ffffff,0px_0px_0px_4px#000000] transition-all duration-300">
+                SOBREMESAS
             </button>
         </div>
     </section>
@@ -73,138 +73,10 @@
     <!-- MENU -->
     <div id="menu">
 
-        <main class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-10 mx-auto max-w-7xl px-2 mb-16">
-
-            <!-- PRODUTO ITEM -->
-            <div class="flex gap-3">
-                <img src="/assets/hamb-1.png" alt="hamburguer 1"
-                    class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-3 duration-200">
-
-                <div>
-                    <p class="font-bold">Smash</p>
-                    <p class="text-sm">Pão de fermentação natural da trigou, burguer 160g, queijo prato e maionese da
-                        casa.</p>
-
-                    <div class="flex items-center gap-2 justify-between mt-3">
-                        <p class="font-bold text-lg">R$ 19.90</p>
-                        <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-name="Smash" data-price="19.90">
-                            <i class="fa fa-cart-plus text-lg text-white"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!--FIM PRODUTO ITEM -->
-            <!-- PRODUTO ITEM -->
-            <div class="flex gap-3">
-                <img src="/assets/hamb-2.png" alt="hamburguer 2"
-                    class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-3 duration-200">
-
-                <div>
-                    <p class="font-bold">Duplo Burguer</p>
-                    <p class="text-sm">Pão de fermentação natural da trigou, burguer 160g, queijo prato e maionese da
-                        casa.</p>
-
-                    <div class="flex items-center gap-2 justify-between mt-3">
-                        <p class="font-bold text-lg">R$ 29.90</p>
-                        <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-name="Duplo Burguer"
-                            data-price="29.90">
-                            <i class="fa fa-cart-plus text-lg text-white"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!--FIM PRODUTO ITEM -->
-            <!-- PRODUTO ITEM -->
-            <div class="flex gap-3">
-                <img src="/assets/hamb-3.png" alt="hamburguer 3"
-                    class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-3 duration-200">
-
-                <div>
-                    <p class="font-bold">Duplo Cheddar</p>
-                    <p class="text-sm">Pão de fermentação natural da trigou, burguer 160g, queijo prato e maionese da
-                        casa.</p>
-
-                    <div class="flex items-center gap-2 justify-between mt-3">
-                        <p class="font-bold text-lg">R$ 25.90</p>
-                        <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-name="Duplo Cheddar"
-                            data-price="25.90">
-                            <i class="fa fa-cart-plus text-lg text-white"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!--FIM PRODUTO ITEM -->
-            <!-- PRODUTO ITEM -->
-            <div class="flex gap-3">
-                <img src="/assets/hamb-4.png" alt="hamburguer 4"
-                    class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-3 duration-200">
-
-                <div>
-                    <p class="font-bold">Chicken</p>
-                    <p class="text-sm">Pão de fermentação natural da trigou, burguer 160g, queijo prato e maionese da
-                        casa.</p>
-
-                    <div class="flex items-center gap-2 justify-between mt-3">
-                        <p class="font-bold text-lg">R$ 35.90</p>
-                        <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-name="Hamburguer Chiken"
-                            data-price="35.90">
-                            <i class="fa fa-cart-plus text-lg text-white"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!--FIM PRODUTO ITEM -->
+        <main id="menu-body" class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-10 mx-auto max-w-7xl px-2 mb-16">
 
         </main>
-
-        <div class="mx-auto max-w-7xl px-2 my-2">
-            <h2 class="font-bold text-3xl">BEBIDAS</h2>
-        </div>
-
-        <!-- BEBIDAS -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-10 mx-auto max-w-7xl px-2 mb-16" id="menu">
-
-            <!-- BEBIDA ITEM -->
-            <div class="flex gap-3 w-full">
-                <img src="/assets/refri-1.png" alt="Refrigerante 1"
-                    class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-3 duration-200">
-
-                <div class="w-full">
-                    <p class="font-bold">Coca-Cola</p>
-
-                    <div class="flex items-center gap-2 justify-between mt-3">
-                        <p class="font-bold text-lg">R$ 5.00</p>
-                        <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-name="Coca-Cola"
-                            data-price="5.00">
-                            <i class="fa fa-cart-plus text-lg text-white"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!--FIM BEBIDA ITEM -->
-
-            <!-- BEBIDA ITEM -->
-            <div class="flex gap-3 w-full">
-                <img src="/assets/refri-2.png" alt="Refrigerante 2"
-                    class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-3 duration-200">
-
-                <div class="w-full">
-                    <p class="font-bold">Guaraná Antarctica</p>
-
-                    <div class="flex items-center gap-2 justify-between mt-3">
-                        <p class="font-bold text-lg">R$ 5.00</p>
-                        <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-name="Guaraná Antarctica"
-                            data-price="5.00">
-                            <i class="fa fa-cart-plus text-lg text-white"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!--FIM BEBIDA ITEM -->
-
-        </div>
-        <!-- FIM BEBIDAS -->
-
+        
     </div>
     <!-- END MENU-->
 
@@ -297,8 +169,8 @@
     <!-- END FOOTER -->
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="/products.js"></script>
     <script src="/script.js"></script>
 
-</body>
 
-</html>
+</body>
