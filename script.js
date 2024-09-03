@@ -1,4 +1,5 @@
 const menu = document.getElementById("menu")
+const menuBody = document.getElementById('menu-body')
 const cartModal = document.getElementById("cart-modal")
 const cartItems = document.getElementById("cart-items")
 const cartTotal = document.getElementById("cart-total")
@@ -28,6 +29,44 @@ closeModalBtn.addEventListener("click", () => {
     cartModal.style.display = "none"
 })
 
+// Função para mostrar o produto com base na categoria
+function showProducts(category = 'hamburguer') {
+
+    const productsFilter = products.filter(product => product.category === category)
+
+    menuBody.innerHTML = ''
+
+    productsFilter.forEach(products => {
+        const containMenu = document.createElement('div')
+
+        containMenu.innerHTML = `
+                <div class='flex gap-3'>
+                    <img class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-3 duration-200" src="${products.image}"/>
+        
+                    <div class='w-full '>
+                        <p class="font-bold">${products.name}</p>
+                        <p class="text-sm">Ingredientes: ${products.ingredients}</p>
+        
+                        <div class='flex gap-2 justify-between mt-3'>
+                            <p class="font-bold text-lg">R$ ${products.price}</p>
+                            <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-product-id="${products.id}">
+                                <i class="fa fa-cart-plus text-lg text-white"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `
+
+        menuBody.appendChild(containMenu)
+    })
+
+}
+showProducts()
+
+// Botões de categorias
+document.getElementById('btn-category--hamburguer').addEventListener('click', () => showProducts('hamburguer'))
+document.getElementById('btn-category--bebida').addEventListener('click', () => showProducts('bebida'))
+document.getElementById('btn-category--sobremesa').addEventListener('click', () => showProducts('sobremesa'))
 
 menu.addEventListener("click", (event) => {
     //console.log(event.target) através do target conseguimos descobrir aonde o usuário está clicando na tela, no caso dentro do menu
@@ -35,16 +74,21 @@ menu.addEventListener("click", (event) => {
     let parentButton = event.target.closest(".add-to-cart-btn") //busca um elemento com a classe selecionada na árvore HTML nos elementos próximos onde o evento foi acionado.
 
     if(parentButton){
-        const name = parentButton.getAttribute("data-name")
-        const price = parseFloat(parentButton.getAttribute("data-price"))
+        const productId = parseInt(parentButton.getAttribute("data-product-id"))
+        const productData = products.find(product => product.id === productId)
+        
+        let name = productData.name
+        let price = productData.price
+        let ingredients = productData.ingredients
+        let img = productData.image
 
-        addToCart(name, price)
+        addToCart(name, price, ingredients, img)
 
     }
 })
 
 //Adicionar itens no carrinho
-function addToCart(name, price){
+function addToCart(name, price, ingredients, img){
     //verificar se o item já existe no carrinho
     const existingItem = cart.find(item => item.name === name)
    
@@ -57,6 +101,7 @@ function addToCart(name, price){
         cart.push({
             name,
             price,
+            ingredients,
             quantity: 1
         })
 

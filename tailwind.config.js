@@ -8,6 +8,9 @@ module.exports = {
     extend: {
       backgroundImage:{
         "home": "url('/assets/bg-4.jpg')"
+      },
+      colors: {
+        "custom-light-gray": "#F5F6F7"
       }
     },
   },
