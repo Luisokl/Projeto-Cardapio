@@ -40,8 +40,8 @@ function showProducts(category = 'hamburguer') {
         const containMenu = document.createElement('div')
 
         containMenu.innerHTML = `
-                <div class='flex gap-3'>
-                    <img class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-3 duration-200" src="${products.image}"/>
+                <div class='flex gap-3 p-2 transition-all duration-300 ease-in-out hover:transform hover:scale-105 hover:shadow-xl hover:bg-white rounded-lg'>
+                    <img class="w-28 h-28 rounded-md" src="${products.image}"/>
         
                     <div class='w-full '>
                         <p class="font-bold">${products.name}</p>
@@ -69,9 +69,11 @@ document.getElementById('btn-category--bebida').addEventListener('click', () => 
 document.getElementById('btn-category--sobremesa').addEventListener('click', () => showProducts('sobremesa'))
 
 menu.addEventListener("click", (event) => {
+    console.log(event.target)
     //console.log(event.target) através do target conseguimos descobrir aonde o usuário está clicando na tela, no caso dentro do menu
 
     let parentButton = event.target.closest(".add-to-cart-btn") //busca um elemento com a classe selecionada na árvore HTML nos elementos próximos onde o evento foi acionado.
+    console.log(parentButton)
 
     if(parentButton){
         const productId = parseInt(parentButton.getAttribute("data-product-id"))
@@ -86,6 +88,8 @@ menu.addEventListener("click", (event) => {
 
     }
 })
+
+// Adicionar item no modal de visualização 
 
 //Adicionar itens no carrinho
 function addToCart(name, price, ingredients, img){
@@ -120,7 +124,7 @@ function updateCart(){
         const cartItemElement = document.createElement("div")
         cartItemElement.classList.add("flex", "justify-between", "mb-4", "flex-col")
 
-        //Contruindo estrutura do modal e adicionando as informações dos itens
+        // Adicionando informações dos itens selecionados no carrinho
         cartItemElement.innerHTML = `   
             <div class="flex items-center justify-between">
                 <div>
