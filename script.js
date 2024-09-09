@@ -1,5 +1,8 @@
+
 const menu = document.getElementById("menu")
 const menuBody = document.getElementById('menu-body')
+const viewModal = document.getElementById('view-modal')
+const modalProduct = document.getElementById('modal-product')
 const cartModal = document.getElementById("cart-modal")
 const cartItems = document.getElementById("cart-items")
 const cartTotal = document.getElementById("cart-total")
@@ -19,7 +22,7 @@ cartBtn.addEventListener("click", () => {
 
 //Fechar Modal do carrinho ao clicar fora dele
 cartModal.addEventListener("click", (event) => {
-    if(event.target === cartModal){
+    if (event.target === cartModal) {
         cartModal.style.display = "none"
     }
 })
@@ -40,7 +43,7 @@ function showProducts(category = 'hamburguer') {
         const containMenu = document.createElement('div')
 
         containMenu.innerHTML = `
-                <div class='flex gap-3 p-2 transition-all duration-300 ease-in-out hover:transform hover:scale-105 hover:shadow-xl hover:bg-white rounded-lg'>
+                <div class='flex gap-3 p-2 transition-all duration-300 ease-in-out hover:transform hover:scale-105 hover:shadow-xl hover:bg-white rounded-lg add-modal-product' data-product-id="${products.id}">
                     <img class="w-28 h-28 rounded-md" src="${products.image}"/>
         
                     <div class='w-full '>
@@ -69,20 +72,35 @@ document.getElementById('btn-category--bebida').addEventListener('click', () => 
 document.getElementById('btn-category--sobremesa').addEventListener('click', () => showProducts('sobremesa'))
 
 menu.addEventListener("click", (event) => {
-    console.log(event.target)
-    //console.log(event.target) através do target conseguimos descobrir aonde o usuário está clicando na tela, no caso dentro do menu
+    //console.log(event.target) //Identificar qual elemento foi clicado no menu
 
-    let parentButton = event.target.closest(".add-to-cart-btn") //busca um elemento com a classe selecionada na árvore HTML nos elementos próximos onde o evento foi acionado.
-    console.log(parentButton)
+    let modalProductView = event.target.closest(".add-modal-product")
 
-    if(parentButton){
+    if (modalProductView) {
+        const productId = parseInt(modalProductView.getAttribute("data-product-id"))
+        const productItem = products.find(product => product.id === productId)
+
+        addModalProduct(productItem)
+        
+    }
+
+
+
+
+
+
+    let parentButton = event.target.closest(".add-to-cart-btn")
+    //console.log(parentButton)
+
+    if (parentButton) {
         const productId = parseInt(parentButton.getAttribute("data-product-id"))
         const productData = products.find(product => product.id === productId)
-        
+
         let name = productData.name
         let price = productData.price
         let ingredients = productData.ingredients
         let img = productData.image
+
 
         addToCart(name, price, ingredients, img)
 
@@ -90,17 +108,48 @@ menu.addEventListener("click", (event) => {
 })
 
 // Adicionar item no modal de visualização 
+function addModalProduct(productItem) {
+    
+    const productElement = document.createElement("div")
+    
+
+    productElement.innerHTML = `
+        <div class="flex">
+            
+            <div class='flex-1'>
+                <img src="assets/hamb-8.png" class='rounded-md'>
+            </div>
+            
+            
+            <div class='pl-3 flex flex-col flex-1'>
+                <div class='flex flex-col'>
+                    <span class='font-bold border-b border-gray-200 pb-2'>Nome do Produto</span>
+                    <span class='border-b border-gray-200 py-2'>Ingredientes do produto</span>
+                </div>
+                <div class='py-3 flex-grow'>
+                    <span class='font-bold'>Adicionais</span>
+                </div>
+                <div class='mt-auto text-center border-t border-gray-200 pt-4'>
+                    <span class='block'>Valor do produto</span>
+                </div>
+            </div>
+        </div> 
+    `
+
+    modalProduct.appendChild(productElement)
+}
+addModalProduct()
 
 //Adicionar itens no carrinho
-function addToCart(name, price, ingredients, img){
+function addToCart(name, price, ingredients, img) {
     //verificar se o item já existe no carrinho
     const existingItem = cart.find(item => item.name === name)
-   
-    if(existingItem){
-        //caso exista vamos alterar apenas a quantidade
-        existingItem.quantity +=1
 
-    }else{
+    if (existingItem) {
+        //caso exista vamos alterar apenas a quantidade
+        existingItem.quantity += 1
+
+    } else {
 
         cart.push({
             name,
@@ -112,11 +161,11 @@ function addToCart(name, price, ingredients, img){
     }
 
     updateCart()
-    
+
 }
 
 //Atualiza as informações no carrinho
-function updateCart(){
+function updateCart() {
     cartItems.innerHTML = ""
     let total = 0
 
@@ -150,26 +199,26 @@ function updateCart(){
         currency: "BRL"
     })
 
-    cartCount.innerHTML = cart.length 
+    cartCount.innerHTML = cart.length
 }
 
 //Função para remover item do carrinho
 cartItems.addEventListener("click", (event) => {
-    if(event.target.classList.contains("remove-cart-btn")){  //Verificando se no item clicado existe a classe referenciada, neste caso nosso modal
+    if (event.target.classList.contains("remove-cart-btn")) {  //Verificando se no item clicado existe a classe referenciada, neste caso nosso modal
         const name = event.target.getAttribute("data-name") //Pegando o atributo data dentro do item
 
         removeItemCart(name)
     }
 })
 
-function removeItemCart(name){
+function removeItemCart(name) {
     const index = cart.findIndex(item => item.name === name)//verificando se encontra o index correspondente ao name na nossa lista.
 
-    if(index != -1){
+    if (index != -1) {
         const item = cart[index] //caso retorne index, vamos buscar o item na lista 
-        
-        if(item.quantity > 1){ //caso tenha a quantidade do item seja maior que um, removemos 1 
-            item.quantity -=1
+
+        if (item.quantity > 1) { //caso tenha a quantidade do item seja maior que um, removemos 1 
+            item.quantity -= 1
 
             updateCart()
             return
@@ -183,9 +232,9 @@ function removeItemCart(name){
 
 //Função de verificação do input de endereço 
 adressInput.addEventListener('input', (event) => {
-    let inputValue = event.target.value 
+    let inputValue = event.target.value
 
-    if(inputValue !== ''){
+    if (inputValue !== '') {
         adressInput.classList.remove('border-red-500')
         adressWarn.classList.add('hidden')
     }
@@ -194,7 +243,7 @@ adressInput.addEventListener('input', (event) => {
 //Finalizar o pedido
 btnCheckout.addEventListener('click', () => {
     const isOpen = checkRestaurantOpen()
-    if(!isOpen){
+    if (!isOpen) {
         Toastify({
             text: "Ops o restaurante está fechado!",
             duration: 3000,
@@ -203,16 +252,16 @@ btnCheckout.addEventListener('click', () => {
             position: "right", // `left`, `center` or `right`
             stopOnFocus: true, // Prevents dismissing of toast on hover
             style: {
-              background: "#ef4444",
+                background: "#ef4444",
             },
-            onClick: function(){} // Callback after click
-          }).showToast();
-       return
+            onClick: function () { } // Callback after click
+        }).showToast();
+        return
     }
-    
-    if(cart.length === 0) return
 
-    if(adressInput.value === ''){
+    if (cart.length === 0) return
+
+    if (adressInput.value === '') {
         adressWarn.classList.remove('hidden')
         adressInput.classList.add('border-red-500')
         return
@@ -220,7 +269,7 @@ btnCheckout.addEventListener('click', () => {
 
     //Após todas verificações, enviar o pedido para API whats
     const cartItems = cart.map((items) => {
-        return(
+        return (
             `${items.name} Quantidade:(${items.quantity}) Preço:R$${items.price} |`
         )
     }).join('')
@@ -235,7 +284,7 @@ btnCheckout.addEventListener('click', () => {
 })
 
 //Verificar a hora para manipular o horário e informar se o restaurante está aberto ou fechado
-function checkRestaurantOpen(){
+function checkRestaurantOpen() {
     const data = new Date()
     const hora = data.getHours()
     return hora >= 18 && hora < 23
@@ -244,10 +293,10 @@ function checkRestaurantOpen(){
 const spanItem = document.getElementById('date-span')
 const isOpen = checkRestaurantOpen()
 
-if(isOpen){
+if (isOpen) {
     spanItem.classList.remove('bg-red-500')
     spanItem.classList.add('bg-green-600')
-}else{
+} else {
     spanItem.classList.remove('bg-green-600')
     spanItem.classList.add('bg-red-500')
 
