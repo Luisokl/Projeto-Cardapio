@@ -1,8 +1,9 @@
 
 const menu = document.getElementById("menu")
 const menuBody = document.getElementById('menu-body')
-const viewModal = document.getElementById('view-modal')
+const detailsModal = document.getElementById("details-modal")
 const modalProduct = document.getElementById('modal-product')
+
 const cartModal = document.getElementById("cart-modal")
 const cartItems = document.getElementById("cart-items")
 const cartTotal = document.getElementById("cart-total")
@@ -41,6 +42,7 @@ function showProducts(category = 'hamburguer') {
 
     productsFilter.forEach(products => {
         const containMenu = document.createElement('div')
+        containMenu.classList.add('product-details')
 
         containMenu.innerHTML = `
                 <div class='flex gap-3 p-2 transition-all duration-300 ease-in-out hover:transform hover:scale-105 hover:shadow-xl hover:bg-white rounded-lg add-modal-product' data-product-id="${products.id}">
@@ -65,6 +67,7 @@ function showProducts(category = 'hamburguer') {
 
 }
 showProducts()
+
 
 // Botões de categorias
 document.getElementById('btn-category--hamburguer').addEventListener('click', () => showProducts('hamburguer'))
@@ -107,7 +110,7 @@ menu.addEventListener("click", (event) => {
     }
 })
 
-// Adicionar item no modal de visualização 
+// Adicionar item no modal de detalhes do produto
 function addModalProduct(productItem) {
     
     const productElement = document.createElement("div")
@@ -139,6 +142,16 @@ function addModalProduct(productItem) {
     modalProduct.appendChild(productElement)
 }
 addModalProduct()
+
+//Abrir o modal de detalhes do produto
+document.addEventListener("DOMContentLoaded", () => {
+    document.body.addEventListener("click", (event) => {
+
+        if(event.target.closest(".product-details")){
+            detailsModal.style.display="flex"
+        }
+    })
+})
 
 //Adicionar itens no carrinho
 function addToCart(name, price, ingredients, img) {
