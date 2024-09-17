@@ -3,7 +3,6 @@ const menu = document.getElementById("menu")
 const menuBody = document.getElementById('menu-body')
 const detailsModal = document.getElementById("details-modal")
 const modalProduct = document.getElementById('modal-product')
-
 const cartModal = document.getElementById("cart-modal")
 const cartItems = document.getElementById("cart-items")
 const cartTotal = document.getElementById("cart-total")
@@ -53,7 +52,7 @@ function showProducts(category = 'hamburguer') {
                         <p class="text-sm">Ingredientes: ${products.ingredients}</p>
         
                         <div class='flex gap-2 justify-between mt-3'>
-                            <p class="font-bold text-lg">R$ ${products.price}</p>
+                            <p class="font-bold text-lg">R$ ${products.price.toFixed(2)}</p>
                             <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-product-id="${products.id}">
                                 <i class="fa fa-cart-plus text-lg text-white"></i>
                             </button>
@@ -112,6 +111,8 @@ menu.addEventListener("click", (event) => {
 
 // Adicionar item no modal de detalhes do produto
 function addModalProduct(productItem) {
+    console.log(productItem)
+    modalProduct.innerHTML=""
     
     const productElement = document.createElement("div")
     
@@ -119,38 +120,63 @@ function addModalProduct(productItem) {
     productElement.innerHTML = `
         <div class="flex">
             
-            <div class='flex-1'>
+            <div class=''>
                 <img src="assets/hamb-8.png" class='rounded-md'>
             </div>
             
             
-            <div class='pl-3 flex flex-col flex-1'>
+            <div class='px-5 flex flex-col '>
                 <div class='flex flex-col'>
-                    <span class='font-bold border-b border-gray-200 pb-2'>Nome do Produto</span>
-                    <span class='border-b border-gray-200 py-2'>Ingredientes do produto</span>
+                    <div class='border-b border-gray-200 pb-3 flex justify-between items-center'>
+                        <span class='font-bold'>${productItem.name}</span>
+                        <button id="close-modal-btn" class='h-8 w-8 bg-slate-300 font-bold rounded-full'>
+                            <i class="fa-solid fa-x text-white"></i>
+                        </button>
+                    </div>
+                    
+                    <span class='py-3'>${productItem.ingredients}</span>
+                    <span class='block border-b border-gray-200 pb-3'>R$ ${productItem.price.toFixed(2)}</span>
                 </div>
                 <div class='py-3 flex-grow'>
                     <span class='font-bold'>Adicionais</span>
                 </div>
                 <div class='mt-auto text-center border-t border-gray-200 pt-4'>
-                    <span class='block'>Valor do produto</span>
+                    <span class='block'>Total: R$ ${productItem.price.toFixed(2)}</span>
                 </div>
             </div>
         </div> 
     `
 
     modalProduct.appendChild(productElement)
+    
 }
-addModalProduct()
 
-//Abrir o modal de detalhes do produto
+
+//Abrir modal de detalhes do produto
 document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", (event) => {
+        console.log(event.target)
 
+        //Abrir o modal 
         if(event.target.closest(".product-details")){
             detailsModal.style.display="flex"
         }
+
+        //Fechar o modal
+        if(event.target.closest("#close-modal-btn")){
+            detailsModal.style.display="none"
+        }
     })
+})
+
+//Fechar modal de detalhes do produto
+closeModalBtn.addEventListener("click", () => {
+    detailsModal.style.display = "none"
+})
+
+//Fechar o modal de detalhes do produto no botão
+closeModalBtn.addEventListener("click", () =>{
+    detailsModal.style.display="none"
 })
 
 //Adicionar itens no carrinho
