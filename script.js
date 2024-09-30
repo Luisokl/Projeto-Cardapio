@@ -86,11 +86,6 @@ menu.addEventListener("click", (event) => {
         
     }
 
-
-
-
-
-
     let parentButton = event.target.closest(".add-to-cart-btn")
     //console.log(parentButton)
 
@@ -111,11 +106,24 @@ menu.addEventListener("click", (event) => {
 
 // Adicionar item no modal de detalhes do produto
 function addModalProduct(productItem) {
-    console.log(productItem)
     modalProduct.innerHTML=""
     
     const productElement = document.createElement("div")
-    
+
+    let additionalHTML = ''
+    additional.forEach((adicional, index) => {
+        
+        additionalHTML += `
+            <div class='flex items-center justify-between py-2'>
+                <span>${adicional.name} - R$ ${adicional.price.toFixed(2)}</span>
+                <div>
+                    <button class='px-2 py-1 bg-gray-200 rounded' onClick='changeQuantity(${index}, -1)'> - </button>
+                    <span id='quantidade-${index}' class='px-2'> 0 </span>
+                    <button class='px-2 py-1 bg-gray-200 rounded' onClick='changeQuantity(${index}, +1)'> + </button>
+                </div>
+            </div>
+        `
+    })
 
     productElement.innerHTML = `
         <div class="flex">
@@ -139,9 +147,12 @@ function addModalProduct(productItem) {
                 </div>
                 <div class='py-3 flex-grow'>
                     <span class='font-bold'>Adicionais</span>
+                    <div id='additional-list'>
+                        ${additionalHTML}
+                    </div>
                 </div>
                 <div class='mt-auto text-center border-t border-gray-200 pt-4'>
-                    <span class='block'>Total: R$ ${productItem.price.toFixed(2)}</span>
+                    <span class='block'>Total: R$ <span id='preco-total'>${productItem.price.toFixed(2)}</span></span>
                 </div>
             </div>
         </div> 
@@ -151,11 +162,35 @@ function addModalProduct(productItem) {
     
 }
 
+//Evento de ação dos botões de adicionais
+function changeQuantity(index, change){
+    const quantityElement = document.getElementById(`quantidade-${index}`)
+    let quantity = parseInt(quantityElement.textContent)
+    quantity = Math.max(0, quantity + change)
+    quantityElement.textContent = quantity
+
+    updateTotalPrice()
+}
+
+//Atualizar preço total no modal de detalhes do produto
+function updateTotalPrice(){
+
+    const productPriceElement = document.getElementById('preco-total')
+    let productPrice = parseFloat(productPriceElement.textContent)
+    
+    let total = 0
+
+    additional.forEach((adicional, index) => {
+        const quantity = parseInt(document.getElementById(`quantidade-${index}`).textContent)
+        total += adicional.price * quantity
+    })
+
+    document.getElementById('preco-total').textContent = total.toFixed(2)
+}
 
 //Abrir modal de detalhes do produto
 document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", (event) => {
-        console.log(event.target)
 
         //Abrir o modal 
         if(event.target.closest(".product-details")){
@@ -167,16 +202,6 @@ document.addEventListener("DOMContentLoaded", () => {
             detailsModal.style.display="none"
         }
     })
-})
-
-//Fechar modal de detalhes do produto
-closeModalBtn.addEventListener("click", () => {
-    detailsModal.style.display = "none"
-})
-
-//Fechar o modal de detalhes do produto no botão
-closeModalBtn.addEventListener("click", () =>{
-    detailsModal.style.display="none"
 })
 
 //Adicionar itens no carrinho

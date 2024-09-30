@@ -65,6 +65,12 @@ const products = [
 ]
 
 
-
+const additional = [
+    { name: 'Hamburguer', price: 5.00 },
+    { name: 'Maionese', price: 1.00 },
+    { name: 'Bacon', price: 3.00 },
+    { name: 'Catupiry', price: 2.00 },
+    { name: 'Ovo', price: 2.00 },
+]
 
 
